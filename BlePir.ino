@@ -1,3 +1,6 @@
+//SE USARA UN SENSOR PIR DE PRESENCIA Y UN LED, EN DONDE EL SENSOR DE PRESENCIA AL DETECTAR ALGO
+//HARÁ QUE EL LED SE ENCIENDA Y CUANDO DEJE DE DETECTAR SE APAGUE
+
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
@@ -5,7 +8,7 @@
 #define CONTROL_CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 #define LED 23
 int ledPin = 12; // declaramos el led en el pin 12 de la ESP32
-int sensorPin=14; // declaramos el sensor PIR en el pin 11
+int sensorPin=14; // declaramos el sensor PIR en el pin 14
 int val = 0; //variable para asignar la lectura del sensor PIR
 String MessagePir ;
 char ledStatus = 48; // 0 in ASCII
@@ -69,12 +72,12 @@ digitalWrite(LED, HIGH); // LED On
 val = digitalRead(sensorPin); //Lee el valor de la variable (val)
 if (val == HIGH) //Si detecta que hay movimiento manda activar el led que hay conectado en el pin 12 del arduino
 {
-  MessagePir = "Detected";
-  digitalWrite(ledPin, HIGH);
+  MessagePir = "Detected"; // Se ha detectado presencia
+  digitalWrite(ledPin, HIGH); 
 }
 else //Si la condición anterior no se cumple manda apagar el led
 {
-   MessagePir = "No Detected";
+   MessagePir = "No Detected"; //No se ha detectado presencia
   digitalWrite(ledPin, LOW);
 }
 nameCharacteristic->setValue(MessagePir.c_str());
